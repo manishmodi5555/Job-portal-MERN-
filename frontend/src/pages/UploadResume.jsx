@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { Card, Form, Button, Alert } from 'react-bootstrap';
 import api from '../utils/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 
 export default function UploadResume() {
   const [file, setFile] = useState(null);
@@ -17,7 +19,7 @@ export default function UploadResume() {
     formData.append('resume', file);
     setLoading(true);
     try {
-      const { data } = await api.post('/resume/upload', formData, {
+      const { data } = await api.post(`${API_BASE_URL}/resume/upload`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setMessage(`Uploaded! Saved at: ${data.resumePath}`);

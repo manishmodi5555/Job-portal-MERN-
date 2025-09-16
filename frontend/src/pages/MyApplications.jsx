@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Alert, Badge } from 'react-bootstrap';
 import api from '../utils/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 
 export default function MyApplications() {
   const [apps, setApps] = useState([]);
@@ -10,7 +12,7 @@ export default function MyApplications() {
       useEffect(() => {
     (async () => {
       try {
-        const { data } = await api.get('/applications');
+        const { data } = await api.get(`${API_BASE_URL}/applications`);
         setApps(data);
           } catch (err) {
         setError('Failed to load applications');

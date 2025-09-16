@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Card, Form, Button, Alert } from 'react-bootstrap';
 import api from '../utils/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export default function Register() {
   const [form, setForm] = useState({ name: '', email: '', password: '' });
@@ -15,11 +16,11 @@ export default function Register() {
     e.preventDefault();
          setLoading(true); setMessage(null); setError(null);
     try {
-              await api.post('/auth/register', form);
+              await api.post(`${API_BASE_URL}/auth/register`, form);
          setMessage('Registered successfully. You can now log in.');
            setForm({ name: '', email: '', password: '' });
       setTimeout(() => {
-        window.location.href = '/login'; // Redirect to  w login after registration
+        window.location.href = '/login'; // Redirect to login after registration
       }, 2000);
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');

@@ -4,6 +4,8 @@ import { Card, Form, Button, Alert } from 'react-bootstrap';
 import api from '../utils/api';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 
 export default function Login() {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -18,7 +20,7 @@ export default function Login() {
     e.preventDefault();
     setLoading(true); setError(null);
     try {
-      const { data } = await api.post('/auth/login', form);
+      const { data } = await api.post(`${API_BASE_URL}/auth/login`, form);
       login(data.token, data.user);
       navigate('/');
     } catch (err) {

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { Card, Button, Row, Col, Badge, Alert, Modal } from 'react-bootstrap';
 import api from '../utils/api';
 import { useAuth } from '../context/AuthContext';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 
 export default function Jobs() {
   const [jobs, setJobs] = useState([]);
@@ -15,7 +17,7 @@ export default function Jobs() {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await api.get('/jobs');
+        const { data } = await api.get(`${API_BASE_URL}/jobs`);
         setJobs(data);
 
         // if(token){
@@ -33,7 +35,7 @@ export default function Jobs() {
     (async () => {
       try {
         if (token) {
-          const { data } = await api.get('/applications');
+          const { data } = await api.get(`${API_BASE_URL}/applications`);
           setApps(data);
           // console.log("thiiiiiiissss", data);
         }
@@ -46,7 +48,7 @@ export default function Jobs() {
   const apply = async (jobId) => {
     setMessage(null); setError(null);
     try {
-      await api.post(`/jobs/apply/${jobId}`);
+      await api.post(`${API_BASE_URL}/jobs/apply/${jobId}`);
       setMessage('Applied successfully!');
       setShow(true);
       
